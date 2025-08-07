@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app = FastAPI()
 
@@ -10,6 +11,20 @@ def index():        # Path operation function
 @app.get("/about")    # About Path
 def about():
     return {"message": "This is the about page!"}
+
+
+@app.get('/blog')
+def index(limit=10, published: bool = True, sort: Optional[str] = None):
+    # only get 10 published blogs
+    if published:
+        return {'data': f'{limit} published blogs from the db'}
+    else:
+        return {'data': f'{limit} blogs from the db'}
+
+
+@app.get('/blog/unpublished')         # This path should be at top because fastapi matches the first path it finds.
+def unpublished():
+    return {'data': 'all unpublished blogs'}
 
 @app.get('/blog/{id}')
 def show(id: int):
