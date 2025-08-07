@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from typing import Optional
+from pydantic import BaseModel
+
 
 app = FastAPI()
 
@@ -36,3 +38,14 @@ def show(id: int):
 def comments(id, limit=10):
     # fetch comments of blog with id = id
     return {'data': {'1', '2'}}
+
+
+class Blog(BaseModel):                    # Blog is a class that inherits from BaseModel.
+    title: str
+    body: str
+    published: Optional[bool]
+
+
+@app.post('/blog')
+def create_blog(blog: Blog):             # Here parameter blog is of type Blog, which is a Pydantic model.
+    return {'data': f"Blog is created with title as {blog.title} and the desc is {blog.body} and published is {blog.published}"}
