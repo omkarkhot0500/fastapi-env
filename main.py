@@ -13,7 +13,7 @@ def about():
     return {"message": "This is the about page!"}
 
 
-@app.get('/blog')
+@app.get('/blog')                           # Sending data through query parameter
 def index(limit=10, published: bool = True, sort: Optional[str] = None):
     # only get 10 published blogs
     if published:
@@ -26,7 +26,7 @@ def index(limit=10, published: bool = True, sort: Optional[str] = None):
 def unpublished():
     return {'data': 'all unpublished blogs'}
 
-@app.get('/blog/{id}')
+@app.get('/blog/{id}')                   # Sending data through path parameter
 def show(id: int):
     # fetch blog with id = id
     return {'data': id}
